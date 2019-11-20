@@ -32,3 +32,55 @@ CREATE TABLE USER_ROLES
     USER_ID INT NOT NULL ,
     ROLE_ID INT NOT NULL
 );
+CREATE  TABLE  AUTHORS (
+                           ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                           FIRSTNAME VARCHAR  (30)  NOT NULL,
+                           LASTNAME VARCHAR (30) NOT NULL
+);
+
+CREATE TABLE GENRES(
+                       ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                       GENRENAME VARCHAR (30) NOT NULL
+);
+
+
+CREATE TABLE BOOKS(
+                      ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                      AUTHORID INT NOT NULL,
+                      BOOKNAME  VARCHAR (255) NOT NULL,
+                      GENREID INT NOT NULL,
+                      STOCK INT NOT NULL DEFAULT 5,
+                      FOREIGN KEY(AUTHORID) REFERENCES AUTHORS(ID),
+                      FOREIGN KEY(GENREID) REFERENCES GENRES(ID)
+);
+
+
+
+CREATE TABLE BOOKIMAGE(
+                          ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                          BOOKID INT NOT NULL,
+                          BOOKIMAGE BLOB NOT NULL,
+                          FOREIGN KEY(BOOKID) REFERENCES BOOKS(ID)
+
+);
+
+
+
+CREATE TABLE BORROW(
+                       ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                       BOOKID INT NOT NULL,
+                       USERID INT NOT NULL,
+                       BORROWDATE DATE NOT NULL,
+                       RETURNDATE DATE  NOT NULL,
+                       FOREIGN KEY(BOOKID) REFERENCES BOOKS(ID),
+                       FOREIGN KEY(USERID) REFERENCES USERS(ID)
+);
+
+CREATE TABLE MESSAGES(
+                         ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                         SENDER INT NOT NULL,
+                         RECIPIENT INT NOT NULL DEFAULT 1,
+                         TEXT  VARCHAR (255) NOT NULL,
+                         FOREIGN KEY(SENDER) REFERENCES AUTHENTICATE(ID) ,
+                         FOREIGN KEY(RECIPIENT) REFERENCES AUTHENTICATE(ID)
+);
