@@ -1,10 +1,10 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@page import="User" %>--%>
-<%--<%@page import="Roles" %>--%>
+<%--<%@page import="bean.User" %>--%>
+<%--<%@page import="bean.Roles" %>--%>
 <%--<%@page import="LogServlet" %>--%>
 <%--<%@page import="LogoutServlet" %>--%>
-<%--<%@page import="UserDAO" %>--%>
+<%--<%@page import="repository.UserDAO" %>--%>
 <html>
 <head>
     <title> Registre page</title>
