@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Book {
     private long id;
     private Author author;
@@ -18,5 +16,26 @@ public class Book {
     private Genre genre;
     private int stock;
 
+    public Book(long id, String bookname) {
+        this.id = id;
+        this.bookname = bookname;
+    }
 
+    public Book(Author author, String bookname, Genre genre, int stock) {
+        this.author = author;
+        this.bookname = bookname;
+        this.genre = genre;
+        this.stock = stock;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", author=" + author +
+                ", bookname='" + bookname + '\'' +
+                ", genre=" + genre +
+                ", stock=" + stock +
+                '}';
+    }
 }

@@ -4,19 +4,20 @@ import lombok.*;
 
 import java.util.Objects;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Authenticate {
     private long id;
     private String login;
     private String password;
     private String profile_enable;
 
-
-
+    public Authenticate(long id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+    }
 
     @Override
     public String toString() {

@@ -5,23 +5,16 @@
     <title>list</title>
     <style>
         table {
-            width: 90%; /* Ширина таблицы */
-            background: white; /* Цвет фона таблицы */
-            color: white; /* Цвет текста */
-            border-spacing: 1px; /* Расстояние между ячейками */
+            width: 90%;
+            background: white;
+            color: white;
+            border-spacing: 1px;
         }
 
         td, th {
-            background: olivedrab; /* Цвет фона ячеек */
-            padding: 5px; /* Поля вокруг текста */
+            background: olivedrab;
+            padding: 5px;
         }
-        /*thead, tbody { display: block; }*/
-
-        /*tbody {*/
-        /*    height: 100px;       !* Just for the demo          *!*/
-        /*    overflow-y: auto;    !* Trigger vertical scroll    *!*/
-        /*    overflow-x: hidden;  !* Hide the horizontal scroll *!*/
-        /*}*/
     </style>
 </head>
 <body>
@@ -55,11 +48,6 @@
 </table>
 
 <br>
-<form action="listbooks" method="post">
-    <input type="submit" name="action" value="list">
-</form>
-<br>
-<h1> Или зарегистрируйтесь </h1>
 <p><a href="login.jsp"> Registration </a></p>
 </body>
 </html>

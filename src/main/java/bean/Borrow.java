@@ -5,18 +5,22 @@ import lombok.*;
 import java.sql.Date;
 import java.util.Objects;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Borrow {
     private long id;
-    private long book;
+    private Book book;
     private long user;
     private Date borrowDate;
     private Date returnDate;
 
+    public Borrow(Book book, long user, Date borrowDate, Date returnDate) {
+        this.book = book;
+        this.user = user;
+        this.borrowDate = borrowDate;
+        this.returnDate = returnDate;
+    }
 
     @Override
     public String toString() {
@@ -29,3 +33,4 @@ public class Borrow {
                 '}';
     }
 }
+

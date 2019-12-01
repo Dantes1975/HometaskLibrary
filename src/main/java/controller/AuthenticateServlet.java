@@ -1,14 +1,9 @@
 package controller;
 
-import bean.Authenticate;
-import bean.Role;
-import bean.User;
-import bean.Users_roles;
-import repository.AuthenticateDaoImpl;
-import repository.RoleDaoImpl;
-import repository.UserDaoImpl;
-import repository.Users_rolesDaoImpl;
+import bean.*;
+import repository.daoImpl.*;
 
+import static utill.ApplicationConstants.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,36 +12,48 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(name = "AuthenticateServlet", urlPatterns = {"/auth", "/guest"})
 
 public class AuthenticateServlet extends HttpServlet {
 
-    private final AuthenticateDaoImpl authenticateDao = new AuthenticateDaoImpl();
-    private final Users_rolesDaoImpl users_rolesDao = new Users_rolesDaoImpl();
-    private final RoleDaoImpl roleDao = new RoleDaoImpl();
-    private final UserDaoImpl userDao = new UserDaoImpl();
-    private Authenticate aut;
-    private Role role;
-    private User user;
-    private Users_roles users_roles;
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        BookDaoImpl bookDao = new BookDaoImpl();
+        AuthenticateDaoImpl authenticateDao = new AuthenticateDaoImpl();
+        Users_rolesDaoImpl users_rolesDao = new Users_rolesDaoImpl();
+        RoleDaoImpl roleDao = new RoleDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
+        Authenticate aut;
+        Role role;
+        User user;
+        Users_roles users_roles;
         List<Authenticate> authenticateList = authenticateDao.getAll();
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        String action = request.getParameter("action");
+        String login = request.getParameter(LOGIN_KEY);
+        String password = request.getParameter(PASSWORD_KEY);
+        String action = request.getParameter(ACTION_KEY);
         HttpSession session = request.getSession();
 
 
-        if (action.toLowerCase().equals("login")) {
+        if (action.toLowerCase().equals(LOGIN_KEY)) {
             if (login == null || login.isEmpty()) {
-                throw new RuntimeException("Invalid User Login");
+                response.setContentType("text/html");
+                PrintWriter writer = response.getWriter();
+                try {
+                    writer.println("<h2> Invalid User Login</h2>");
+                } finally {
+                    writer.close();
+                }
             } else if (password == null || password.isEmpty()) {
-                throw new RuntimeException("Invalid User Password");
+                response.setContentType("text/html");
+                PrintWriter writer = response.getWriter();
+                try {
+                    writer.println("<h2>Invalid User Password</h2>");
+                } finally {
+                    writer.close();
+                }
             } else {
 
                 aut = authenticateDao.getByLogin(login);
@@ -57,27 +64,30 @@ public class AuthenticateServlet extends HttpServlet {
                         users_roles = users_rolesDao.getByUserID(user.getId());
                         role = roleDao.getById(users_roles.getRole_id());
 
-                        session.setAttribute("authenticate", aut);
+                        session.setAttribute(AUTHENTICATE_KEY, aut);
                         session.setAttribute("user", user);
-                        session.setAttribute("role", role);
-                        session.setAttribute("authent", authenticateList);
+                        session.setAttribute(ROLE_KEY, role);
+                        session.setAttribute(AUTHENT_KEY, authenticateList);
 
-
-                        getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
-
+                        if (role.getRole().toLowerCase().equals(USER_ROLE)) {
+                            getServletContext().getRequestDispatcher(BOOKS_JSP).forward(request, response);
+                        } else if (role.getRole().toLowerCase().equals(ADMIN_ROLE)) {
+                            getServletContext().getRequestDispatcher(ADMIN_JSP).forward(request, response);
+                        }
 
                     } else {
-                        getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+                        getServletContext().getRequestDispatcher(LOGIN_JSP).forward(request, response);
                     }
                 } else {
-                    getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+                    getServletContext().getRequestDispatcher(LOGIN_JSP).forward(request, response);
                 }
 
             }
         }
-        if (action.toLowerCase().equals("guest")) {
-            request.setAttribute("list", "books not found");
-            request.getRequestDispatcher("/list.jsp").forward(request, response);
+        if (action.toLowerCase().equals(GUEST_ROLE)) {
+            List<Book> books = bookDao.getAll();
+            session.setAttribute(LISTBOOKS_KEY, books);
+            request.getRequestDispatcher(LIST_JSP).forward(request, response);
         }
     }
 }

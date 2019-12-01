@@ -3,11 +3,9 @@ package bean;
 
 import lombok.*;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Users_roles {
     private long id;
     private long user_id;

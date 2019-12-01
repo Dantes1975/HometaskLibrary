@@ -27,6 +27,34 @@
 </form>
 <h1> !!! Welcom to library, ${sessionScope.authenticate.login} !!! </h1> <br>
 <h1> YOUR STATUS is ${sessionScope.authenticate.profile_enable} </h1>
+<h1> MESSAGE </h1>
+<form action="message" method="post">
+    <input type="hidden" name="sender" value="${sessionScope.user.id}">
+    Введите адресата (admin 1 or 2) <input type="text" name="recipient">
+    Введите текст <input type="text" name="text">
+    <button type="submit" name="action" value="send">SEND</button>
+</form>
+<p> Messages </p>
+<table>
+    <tr>
+        <th> From</th>
+        <th> Text</th>
+        <th> Delete</th>
+    </tr>
+    <c:forEach items="${sessionScope.mymessages}" var="message">
+        <tr>
+            <td> ${message.sender} </td>
+            <td> ${message.text} </td>
+            <td>
+                <form action="delete" method="post">
+                    <input type="hidden" name="id" value="${message.id}"/>
+                    <input type="submit" name="action" value="delete"/>
+                </form>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+
 
 <c:if test="${sessionScope.role.role == 'user'}">
     <h2> If you wont to choose your settings </h2>
@@ -40,93 +68,90 @@
     <p>Your aut_id = ${sessionScope.authenticate.id}</p>
     <p>Your role = ${sessionScope.role.role}</p>
 
-    <form action="update" method="post">
-        login <input type="text" name="login"/><br>
-        password <input type="password" name="password"/><br>
-        name <input type="text" name="name"/>
-        surname <input type="text" name="surname"/>
-        email <input type="text" name="email"/>
-        age <input type="password" name="age"/>
-        age <input type="hidden" name="role" value="user"/>
+    <p><a href="update.jsp"> Update </a></p>
 
-        <br>
-        <input type="submit" name="action" value="update">
-    </form>
-    <br>
 
     <c:if test="${sessionScope.authenticate.profile_enable == 'ON'}">
-        <h2> To take book input book_id from list</h2>
-        <form action="takebook" method="post">
-            login <input type="text" name="bookid"/>
-            <br>
-            <input type="submit" name="action" value="take"><br>
-        </form>
+        <p><a href="books.jsp"> TAKE BOOKS </a></p>
     </c:if>
-
+    <c:if test="${sessionScope.authenticate.profile_enable == 'OFF'}">
+        <p> Вы заблокированы, обратитесь к администратору </p>
+    </c:if>
     <br>
-    <h2> To return book input book_id from list</h2>
-    <form action="returnbook" method="post">
-        login <input type="text" name="bookid"/>
-        <br>
-        <input type="submit" name="action" value="return">
-    </form>
+
+    <p><a href="borrows.jsp"> BORROWS BOOKS </a></p>
     <br>
 </c:if>
 
 <c:if test="${sessionScope.role.role == 'admin'}">
+    <p><a href="createBook.jsp"> CREATE BOOK </a></p>
+    <p><a href="createUserByAdmin.jsp"> CREATE USER </a></p>
+    <br>
 
-    <form action="set" method="post">
-        login <input type="text" name="login"/>
-        password <input type="password" name="password"/>
-        name <input type="text" name="name"/>
-        surname <input type="text" name="surname"/>
-        email <input type="text" name="email"/>
-        age <input type="password" name="age"/>
-        role <select name="role">
-        <option>ADMIN</option>
-        <option>USER</option>
-    </select>
-        <br>
-        <input type="submit" name="action" value="add">
-    </form>
-    <br>
-    <br>
     <table>
         <tr>
             <th> ID</th>
             <th> LOGIN</th>
             <th> PASSWORD</th>
             <th> PROFILE ENABLE</th>
+            <th> OFF</th>
+            <th> ON</th>
+            <th> DEL</th>
         </tr>
         <c:forEach items="${sessionScope.authent}" var="authnticate">
-            <%--            <p> ID ${authnticate.id} LOGIN ${authnticate.login} PASSWORD ${authnticate.password}--%>
-            <%--                PROFILE ${authnticate.profile_enable} </p>--%>
             <tr>
                 <td> ${authnticate.id} </td>
-                <td> ${authnticate.login}
+                <td> ${authnticate.login} </td>
                 <td> ${authnticate.password} </td>
-                <td> ${authnticate.profile_enable}
+                <td> ${authnticate.profile_enable} </td>
+                <td>
+                    <form action="off" method="post">
+                        <input type="hidden" name="id" value="${authnticate.id}"/>
+                        <select name="type">
+                            <option>block</option>
+                            <option>off</option>
+                        </select>
+                        <input type="submit" name="action" value="off">
+                    </form>
+                </td>
+                <td>
+                    </form>
+                    <form action="on" method="post">
+                        <input type="hidden" name="id" value="${authnticate.id}"/>
+                        <input type="submit" name="action" value="on"/>
+                    </form>
+                </td>
+                <td>
+                    <form action="delete" method="post">
+                        <input type="hidden" name="id" value="${authenticate.id}"/>
+                        <input type="submit" name="action" value="delete"/>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
     </table>
     <br>
     <br>
-    <form action="delete" method="post">
-        USER ID <input type="text" name="id"/>
-        <input type="submit" name="action" value="delete"/>
-    </form>
-    <form action="off" method="post">
-        USER ID <input type="text" name="id"/>
-        <select name="type">
-            <option>block</option>
-            <option>off</option>
-        </select>
-        <input type="submit" name="action" value="off">
-    </form>
-    <form action="on" method="post">
-        USER ID <input type="text" name="id"/>
-        <input type="submit" name="action" value="on"/>
-    </form>
+    <p> Messages </p>
+    <table>
+        <tr>
+            <th> From</th>
+            <th> Text</th>
+            <th> Delete</th>
+        </tr>
+        <c:forEach items="${sessionScope.messages}" var="message">
+            <tr>
+                <td> ${message.sender} </td>
+                <td> ${message.text} </td>
+                <td>
+                    <form action="delete" method="post">
+                        <input type="hidden" name="id" value="${message.id}"/>
+                        <input type="submit" name="action" value="delete"/>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 </c:if>
 
 </body>

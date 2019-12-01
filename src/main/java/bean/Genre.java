@@ -4,11 +4,9 @@ import lombok.*;
 
 import java.util.Objects;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Genre {
     private long id;
     private String genrename;

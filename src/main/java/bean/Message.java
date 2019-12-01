@@ -4,11 +4,9 @@ import lombok.*;
 
 
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Message {
 
     private long id;
@@ -16,7 +14,11 @@ public class Message {
     private long recipient;
     private String text;
 
-
+    public Message(long sender, long recipient, String text) {
+        this.sender = sender;
+        this.recipient = recipient;
+        this.text = text;
+    }
 
     @Override
     public String toString() {

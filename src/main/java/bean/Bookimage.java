@@ -5,24 +5,16 @@ import lombok.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Bookimage {
     private long id;
     private long bookId;
+    private String filename;
     private byte[] bookimage;
 
 
 
-    @Override
-    public String toString() {
-        return "Bookimage{" +
-                "id=" + id +
-                ", bookId=" + bookId +
-                ", bookimage=" + Arrays.toString(bookimage) +
-                '}';
-    }
+
 }

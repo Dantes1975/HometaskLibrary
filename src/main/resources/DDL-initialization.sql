@@ -59,6 +59,7 @@ CREATE TABLE BOOKS(
 CREATE TABLE BOOKIMAGE(
                           ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                           BOOKID INT NOT NULL,
+                          FILENAME VARCHAR (255),
                           BOOKIMAGE BLOB NOT NULL,
                           FOREIGN KEY(BOOKID) REFERENCES BOOKS(ID)
 
