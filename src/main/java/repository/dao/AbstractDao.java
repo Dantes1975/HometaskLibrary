@@ -76,15 +76,12 @@ public abstract class AbstractDao<T> implements CrudDao<T> {
     public T update(T t) {
         try (Connection cn = dataBaseConnector.getConnection();
              Statement st = cn.createStatement()) {
-            st.executeUpdate(getUpdateQuery(t), 1);
-            ResultSet rs = st.getGeneratedKeys();
-            while (rs.next()) {
-                return getById(rs.getLong("id"));
-            }
+            st.executeUpdate(getUpdateQuery(t));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return t;
     }
 
     @Override

@@ -28,15 +28,17 @@ public class UpdateServlet extends HttpServlet {
         String name = request.getParameter(NAME_KEY);
         String surname = request.getParameter(SURNAME_KEY);
         String email = request.getParameter(EMAIL_KEY);
+        String profile = request.getParameter(PROFILE_KEY);
+
         int age = Integer.parseInt(request.getParameter(AGE_KEY));
         long id = Long.parseLong(request.getParameter(ID_KEY));
         HttpSession session = request.getSession();
-        Authenticate auth = new Authenticate(id, login, password);
+        Authenticate auth = new Authenticate(id, login, password, profile);
         User user = new User(id, name, surname, email, age);
         userDao.update(user);
         authDao.update(auth);
-        session.setAttribute(AUTHENT_KEY, authDao.getAll());
-        getServletContext().getRequestDispatcher(START_JSP).forward(request, response);
+        session.setAttribute(AUTHENTICATE_KEY, auth);
+        getServletContext().getRequestDispatcher(BOOKS_JSP).forward(request, response);
     }
 
 }

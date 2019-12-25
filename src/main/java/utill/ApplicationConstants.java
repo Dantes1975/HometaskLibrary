@@ -41,6 +41,7 @@ public interface ApplicationConstants {
     String USERS_KEY = "users";
     String SEND_KEY = "send";
     String FILE_KEY = "file";
+    String PROFILE_KEY = "profile";
 
     String LIST_JSP = "/list.jsp";
     String BOOKS_JSP = "/books.jsp";

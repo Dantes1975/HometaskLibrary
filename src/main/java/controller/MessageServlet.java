@@ -15,7 +15,7 @@ import java.util.List;
 
 import static utill.ApplicationConstants.*;
 
-@WebServlet(name = "MessageServlet", urlPatterns = "/message")
+@WebServlet(name = "MessageServlet", urlPatterns = {"/message", "/deleteServlet"})
 public class MessageServlet extends HttpServlet {
 
 
@@ -24,6 +24,7 @@ public class MessageServlet extends HttpServlet {
 
         long sender = Long.parseLong(request.getParameter(SENDER_KEY));
         long recipient = Long.parseLong(request.getParameter(RECIPIENT_KEY));
+        long id = Long.parseLong(request.getParameter(ID_KEY));
         String text = request.getParameter(TEXT_KEY);
         String action = request.getParameter(ACTION_KEY);
         HttpSession session = request.getSession();
@@ -44,13 +45,18 @@ public class MessageServlet extends HttpServlet {
             } finally {
                 writer.close();
             }
-           // getServletContext().getRequestDispatcher(BOOKS_JSP).forward(request, response);
+            // getServletContext().getRequestDispatcher(BOOKS_JSP).forward(request, response);
         } else if (action.toLowerCase().equals(MESSAGES_KEY)) {
             List<Message> mymessages = messageDao.getMyMessages(recipient);
             session.setAttribute(MYMESSAGES_KEY, mymessages);
             getServletContext().getRequestDispatcher(BOOKS_JSP).forward(request, response);
+        } else if (action.toLowerCase().equals(DELETE_KEY)) {
+            messageDao.delete(id);
+            List<Message> mymessages = messageDao.getMyMessages(recipient);
+            session.setAttribute(MYMESSAGES_KEY, mymessages);
+            getServletContext().getRequestDispatcher(BOOKS_JSP).forward(request, response);
         }
+
+
     }
-
-
 }

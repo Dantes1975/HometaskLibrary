@@ -15,6 +15,7 @@ public class BorrowDaoImpl extends AbstractDao<Borrow> implements BorrowDao {
     private static final String INSERT_INTO_BORROW = "INSERT INTO BORROW (BOOKID, USERID, BORROWDATE, RETURNDATE) " +
             "VALUES (?,?,?,?)";
     private static final String SELECT_FROM_BORROW = "SELECT * FROM BORROW WHERE USERID=?";
+    private static final String SELECT_BOOKID_FROM_BORROW = "SELECT BOOKID FROM BORROW WHERE USERID=?";
 
 
     @Override
@@ -96,7 +97,21 @@ public class BorrowDaoImpl extends AbstractDao<Borrow> implements BorrowDao {
         return null;
     }
 
-
+    public List<Long> getBooksIdByUserId(Long id) {
+        List<Long> list = new ArrayList<>();
+        try (Connection cn = dataBaseConnector.getConnection();
+             PreparedStatement st = cn.prepareStatement(SELECT_BOOKID_FROM_BORROW)) {
+            st.setLong(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getLong("bookid"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public void deleteUserById(long id) {
         try (Connection cn = dataBaseConnector.getConnection();
              Statement st = cn.createStatement()) {

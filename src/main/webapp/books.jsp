@@ -21,7 +21,8 @@
 <form action="logout" method="post">
     <input type="submit" name="action" value="logout">
 </form>
-<h1> !!! Welcom to library, ${sessionScope.authenticate.login} !!! </h1> <br>
+
+<h1> ${sessionScope.authenticate.login} </h1> <br>
 <h1> YOUR STATUS is ${sessionScope.authenticate.profile_enable} </h1>
 
 <h1> MESSAGE </h1>
@@ -29,13 +30,14 @@
     <input type="hidden" name="sender" value="${sessionScope.user.id}">
     Введите адресата (admin 1 or 2) <input type="text" name="recipient">
     Введите текст <input type="text" name="text">
+    <input type="hidden" name="id" value="0">
     <button type="submit" name="action" value="send">SEND</button>
 </form>
 
 <form action="message" method="post">
     <input type="hidden" name="sender" value="0">
     <input type="hidden" name="recipient" value="${sessionScope.user.id}">
-    <input type="hidden" name="sender" value="message">
+    <input type="hidden" name="id" value="0">
     <button type="submit" name="action" value="messages">MESSAGES</button>
 </form>
 <table>
@@ -49,7 +51,10 @@
             <td> ${message.sender} </td>
             <td> ${message.text} </td>
             <td>
-                <form action="delete" method="post">
+                <form action="deleteServlet" method="post">
+                    <input type="hidden" name="sender" value="0">
+                    <input type="hidden" name="recipient" value="${sessionScope.user.id}">
+                    <input type="hidden" name="text" value="message">
                     <input type="hidden" name="id" value="${message.id}"/>
                     <input type="submit" name="action" value="delete"/>
                 </form>

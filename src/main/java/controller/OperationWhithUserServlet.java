@@ -1,10 +1,8 @@
 package controller;
 
 
-import repository.daoImpl.AuthenticateDaoImpl;
-import repository.daoImpl.BorrowDaoImpl;
-import repository.daoImpl.UserDaoImpl;
-import repository.daoImpl.Users_rolesDaoImpl;
+import bean.Message;
+import repository.daoImpl.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 import static utill.ApplicationConstants.*;
 
@@ -26,9 +25,12 @@ public class OperationWhithUserServlet extends HttpServlet {
         AuthenticateDaoImpl authDao = new AuthenticateDaoImpl();
         Users_rolesDaoImpl user_role = new Users_rolesDaoImpl();
         BorrowDaoImpl borrowDao = new BorrowDaoImpl();
+        BookDaoImpl bookDao = new BookDaoImpl();
+        MessageDaoImpl messageDao = new MessageDaoImpl();
         String action = request.getParameter(ACTION_KEY);
         String type = request.getParameter(TYPE_KEY);
         long id = Long.parseLong(request.getParameter(ID_KEY));
+        long sender = Long.parseLong(request.getParameter(SENDER_KEY));
         HttpSession session = request.getSession();
 
         if (action.toLowerCase().equals(DELETE_KEY)) {
@@ -36,13 +38,26 @@ public class OperationWhithUserServlet extends HttpServlet {
             authDao.delete(id);
             user_role.delete(id);
         } else if (action.toLowerCase().equals(ON_KEY)) {
-            session.setAttribute(AUTHENTICATE_KEY, authDao.authOn(id));
+            authDao.authOn(id);
+            session.setAttribute(AUTHENT_KEY, authDao.getAll());
         } else if (action.toLowerCase().equals(OFF_KEY)) {
             if (type.toLowerCase().equals(BLOCK_KEY)) {
-                session.setAttribute(AUTHENTICATE_KEY, authDao.authBlock(id));
+                authDao.authBlock(id);
+                session.setAttribute(AUTHENT_KEY, authDao.getAll());
             } else if (type.toLowerCase().equals(OFF_KEY)) {
+                Message message = new Message();
+                message.setSender(sender);
+                message.setRecipient(id);
+                message.setText("Block for borrow");
+                messageDao.insert(message);
                 borrowDao.deleteUserById(id);
-                session.setAttribute(AUTHENTICATE_KEY, authDao.authOff(id));
+                List<Long> bookId = borrowDao.getBooksIdByUserId(id);
+                for (Long bookid : bookId) {
+                    bookDao.returnBook(bookid);
+                }
+                authDao.authOff(id);
+                session.setAttribute(AUTHENT_KEY, authDao.getAll());
+                session.setAttribute(MESSAGE_KEY, message);
             }
         }
         session.setAttribute(USERS_KEY, userDao.getAll());
