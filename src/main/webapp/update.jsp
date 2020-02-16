@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <title>Login</title>
+    <title> update </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -28,17 +28,17 @@
     <!--===============================================================================================-->
 </head>
 <body>
-
+<h1> Введите новые данные </h1><br>
 <div class="limiter">
     <div class="container-login100" style="background-image: url('Start/images/bg-01.jpg');">
         <div class="wrap-login100">
-            <form action="login" method="post" class="login100-form validate-form">
+            <form action="update" method="post" class="login100-form validate-form">
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
 
                 <span class="login100-form-title p-b-34 p-t-27">
-						Registration
+						UPDATE
 					</span>
 
                 <div class="wrap-input100 validate-input" data-validate="Enter login and password">
@@ -71,25 +71,20 @@
                     <span class="focus-input100" data-placeholder="&#xf207;"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input" data-validate="Enter login and password">
-                    <input class="input100" type="hidden" name="role" value="user">
-<%--                    <span class="focus-input100" data-placeholder="&#xf207;"></span>--%>
+                <div>
+                    <input class="input100" type="hidden" name="id" value="${sessionScope.user.id}">
+                </div>
+
+                <div>
+                    <input class="input100" type="hidden" name="profile" value="${sessionScope.authenticate.profile_enable}">
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" type="submit" name="action" value="login">
-                        Registration
+                    <button class="login100-form-btn" type="submit" name="action" value="update">
+                        UPDATE
                     </button>
                 </div>
 
-            </form>
-
-            <form action="logout" method="post">
-                <div class="text-center p-t-90">
-                    <button type="submit" name="action" value="logout">
-                        LOGOUT
-                    </button>
-                </div>
             </form>
         </div>
     </div>
@@ -115,44 +110,18 @@
 <!--===============================================================================================-->
 <script src="Start/js/main.js"></script>
 
+<%--<form action="update" method="post">--%>
+<%--    Input new login <input type="text" name="login"/><br>--%>
+<%--    Input new password <input type="password" name="password"/><br>--%>
+<%--    Input new name <input type="text" name="name"/><br>--%>
+<%--    Input new surname <input type="text" name="surname"/><br>--%>
+<%--    Input new email <input type="text" name="email"/><br>--%>
+<%--    Input new age <input type="password" name="age"/>--%>
+<%--    <input type="hidden" name="id" value="${sessionScope.user.id}"/>--%>
+
+<%--    <br>--%>
+<%--    <input type="submit" name="action" value="update">--%>
+<%--</form>--%>
+<br>
 </body>
 </html>
-
-
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-
-<%--<html>--%>
-<%--<head>--%>
-<%--    <title>Login meny</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-
-<%--<h1>Регистрация нового пользователя</h1> <br>--%>
-<%--<h1> Введите данные </h1> <br>--%>
-
-<%--<form action="logout" method="post">--%>
-<%--    <input type="submit" name="action" value="logout">--%>
-<%--</form>--%>
-
-<%--<p> ${requestScope.error}</p>--%>
-
-<%--<form action="login" method="post">--%>
-
-<%--    <input type="text" required placeholder="login" name="login"><br><br>--%>
-<%--    <input type="password" required placeholder="password" name="password"><br><br>--%>
-<%--    <input type="text" required placeholder="NAME" name="name"><br><br>--%>
-<%--    <input type="text" required placeholder="surname" name="surname"><br><br>--%>
-<%--    <input type="text" required placeholder="age" name="age"><br><br>--%>
-<%--    <input type="text" required placeholder="email" name="email"><br><br>--%>
-<%--    <input type="hidden" name="role" value="user"><br><br>--%>
-<%--    <input class="button" type="submit" name="action" value="login">--%>
-<%--</form>--%>
-<%--<br>--%>
-
-<%--<h1> Или войдите как гость </h1><br>--%>
-
-<%--<form action="guest" method="post">--%>
-<%--    <input type="submit" name="action" value="GUEST">--%>
-<%--</form>--%>
-<%--</body>--%>
-<%--</html>--%>

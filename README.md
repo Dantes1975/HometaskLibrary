@@ -1,1 +1,1 @@
-# HometaskLibrary
+Web project impl Servlet + JSP + JDBC

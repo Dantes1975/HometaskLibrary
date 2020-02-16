@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <title>Login</title>
+    <title>create</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -32,64 +33,46 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url('Start/images/bg-01.jpg');">
         <div class="wrap-login100">
-            <form action="login" method="post" class="login100-form validate-form">
+            <form action="create" method="post" class="login100-form validate-form">
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
 
                 <span class="login100-form-title p-b-34 p-t-27">
-						Registration
+						CREATE BOOK
 					</span>
 
                 <div class="wrap-input100 validate-input" data-validate="Enter login and password">
-                    <input class="input100" type="text" name="login" placeholder="Login">
+                    <input class="input100" type="text" name="bookname" placeholder="Bookname">
                     <span class="focus-input100" data-placeholder="&#xf207;"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <input class="input100" type="password" name="password" placeholder="Password">
+                    <input class="input100" type="text" name="name" placeholder="Author name">
                     <span class="focus-input100" data-placeholder="&#xf191;"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Enter login and password">
-                    <input class="input100" type="text" name="name" placeholder="Name">
+                    <input class="input100" type="text" name="surname" placeholder="Author surname">
                     <span class="focus-input100" data-placeholder="&#xf207;"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Enter login and password">
-                    <input class="input100" type="text" name="surname" placeholder="Surname">
+                    <input class="input100" type="text" name="genrename" placeholder="Genre">
                     <span class="focus-input100" data-placeholder="&#xf207;"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Enter login and password">
-                    <input class="input100" type="text" name="age" placeholder="Age">
+                    <input class="input100" type="file" name="file" placeholder="Description">
                     <span class="focus-input100" data-placeholder="&#xf207;"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate="Enter login and password">
-                    <input class="input100" type="email" name="email" placeholder="Email">
-                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate="Enter login and password">
-                    <input class="input100" type="hidden" name="role" value="user">
-<%--                    <span class="focus-input100" data-placeholder="&#xf207;"></span>--%>
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" type="submit" name="action" value="login">
-                        Registration
+                    <button class="login100-form-btn" type="submit" name="action" value="create">
+                        CREATE BOOK
                     </button>
                 </div>
 
-            </form>
-
-            <form action="logout" method="post">
-                <div class="text-center p-t-90">
-                    <button type="submit" name="action" value="logout">
-                        LOGOUT
-                    </button>
-                </div>
             </form>
         </div>
     </div>
@@ -115,44 +98,18 @@
 <!--===============================================================================================-->
 <script src="Start/js/main.js"></script>
 
+<%--<form action="create" method="post">--%>
+<%--    Bookname <input type="text" name="bookname"/>--%>
+<%--    <br>--%>
+<%--    Author name <input type="text" name="name"/>--%>
+<%--    <br>--%>
+<%--    Author surname <input type="text" name="surname"/>--%>
+<%--    <br>--%>
+<%--    Genre <input type="text" name="genrename"/>--%>
+<%--    <br>--%>
+<%--    Description <input type="file" name="file"/>--%>
+<%--    <br>--%>
+<%--    <input type="submit" name="action" value="create">--%>
+<%--</form>--%>
 </body>
 </html>
-
-
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-
-<%--<html>--%>
-<%--<head>--%>
-<%--    <title>Login meny</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-
-<%--<h1>Регистрация нового пользователя</h1> <br>--%>
-<%--<h1> Введите данные </h1> <br>--%>
-
-<%--<form action="logout" method="post">--%>
-<%--    <input type="submit" name="action" value="logout">--%>
-<%--</form>--%>
-
-<%--<p> ${requestScope.error}</p>--%>
-
-<%--<form action="login" method="post">--%>
-
-<%--    <input type="text" required placeholder="login" name="login"><br><br>--%>
-<%--    <input type="password" required placeholder="password" name="password"><br><br>--%>
-<%--    <input type="text" required placeholder="NAME" name="name"><br><br>--%>
-<%--    <input type="text" required placeholder="surname" name="surname"><br><br>--%>
-<%--    <input type="text" required placeholder="age" name="age"><br><br>--%>
-<%--    <input type="text" required placeholder="email" name="email"><br><br>--%>
-<%--    <input type="hidden" name="role" value="user"><br><br>--%>
-<%--    <input class="button" type="submit" name="action" value="login">--%>
-<%--</form>--%>
-<%--<br>--%>
-
-<%--<h1> Или войдите как гость </h1><br>--%>
-
-<%--<form action="guest" method="post">--%>
-<%--    <input type="submit" name="action" value="GUEST">--%>
-<%--</form>--%>
-<%--</body>--%>
-<%--</html>--%>
